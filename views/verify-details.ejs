@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://assets.onfido.com/web-sdk-releases/10.4.0/style.css"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Onfido SDK Demo</title>
+  </head>
+  <body>
+    <div
+      class="container h-100 d-flex justify-content-center align-items-center"
+    >
+      <div class="onfido-sdk-ui-Theme-root onfido-sdk-ui-Modal-inner">
+        <form
+          id="details-form"
+          action="/submit"
+          method="post"
+          class="text-center p-4"
+        >
+          <div class="onfido-sdk-ui-PageTitle-titleWrapper">
+            <div
+              class="onfido-sdk-ui-PageTitle-title"
+              role="heading"
+              aria-level="1"
+              aria-live="assertive"
+            >
+              <span class="onfido-sdk-ui-PageTitle-titleSpan" tabindex="-1"
+                >Please confirm the details are correct:</span
+              >
+            </div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="firstName">First Name:</label>
+            <input
+              type="text"
+              class="form-control onfido-input"
+              id="firstName"
+              name="firstName"
+              placeholder="Enter your first name"
+              value="<%= firstName %>"
+              required
+            />
+            <div class="invalid-feedback">Please enter your first name.</div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="lastName">Last Name:</label>
+            <input
+              type="text"
+              class="form-control onfido-input"
+              id="lastName"
+              name="lastName"
+              placeholder="Enter your last name"
+              value="<%= lastName %>"
+              required
+            />
+            <div class="invalid-feedback">Please enter your last name.</div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="dob">Date of Birth:</label>
+            <input
+              type="text"
+              class="form-control onfido-input"
+              id="dob"
+              name="dob"
+              placeholder="Enter your date of birth"
+              value="<%= dob %>"
+              required
+            />
+            <div class="invalid-feedback">Please enter your date of birth.</div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="addressLine1">Address Line 1:</label>
+            <input
+              type="text"
+              class="form-control onfido-input"
+              id="addressLine1"
+              name="addressLine1"
+              placeholder="Enter address line 1"
+              value="<%= road %>"
+              required
+            />
+            <div class="invalid-feedback">
+              Please enter your address line 1.
+            </div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="addressLine2">Address Line 2:</label>
+            <input
+              type="text"
+              class="form-control onfido-input"
+              id="addressLine2"
+              name="addressLine2"
+              placeholder="Enter address line 2"
+              value="<%= town %>"
+              required
+            />
+            <div class="invalid-feedback">
+              Please enter your address line 2.
+            </div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="addressLine3">Address Line 3:</label>
+            <input
+              type="text"
+              class="form-control onfido-input"
+              id="addressLine3"
+              name="addressLine3"
+              placeholder="Enter address line 3"
+              value="<%= city %>"
+              required
+            />
+            <div class="invalid-feedback">
+              Please enter your address line 3.
+            </div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="addressLine2">Address Line 4:</label>
+            <input
+              type="text"
+              class="form-control onfido-input"
+              id="addressLine4"
+              name="addressLine4"
+              placeholder="Enter address line 2"
+              value="<%= postcode %>"
+              required
+            />
+            <div class="invalid-feedback">
+              Please enter your address line 4.
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-block my-4" type="submit">
+            Confirm
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://assets.onfido.com/web-sdk-releases/10.4.0/onfido.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#details-form").validate({
+          rules: {
+            firstName: {
+              required: true,
+              maxlength: 50,
+            },
+            lastName: {
+              required: true,
+              maxlength: 50,
+            },
+            dob: {
+              required: true,
+              dateISO: true,
+            },
+            addressLine1: {
+              required: true,
+              maxlength: 100,
+            },
+            addressLine2: {
+              maxlength: 100,
+            },
+            addressLine3: {
+              maxlength: 100,
+            },
+            addressLine4: {
+              required: true,
+              maxlength: 100,
+            },
+          },
+          errorElement: "div",
+          errorClass: "invalid-feedback",
+          highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid").removeClass("is-valid");
+          },
+          unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass("is-invalid").addClass("is-valid");
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

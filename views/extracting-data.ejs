@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://assets.onfido.com/web-sdk-releases/10.4.0/style.css"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Onfido SDK Demo</title>
+  </head>
+  <body>
+    <div
+      class="container h-100 d-flex justify-content-center align-items-center"
+    >
+      <div class="onfido-sdk-ui-Theme-root onfido-sdk-ui-Modal-inner">
+        <form
+          id="details-form"
+          action="/submit"
+          method="post"
+          class="text-center p-5"
+        >
+          <div class="onfido-sdk-ui-PageTitle-titleWrapper">
+            <div
+              class="onfido-sdk-ui-PageTitle-title"
+              role="heading"
+              aria-level="1"
+              aria-live="assertive"
+            >
+              <span class="onfido-sdk-ui-PageTitle-titleSpan" tabindex="-1"
+                > Please wait a moment</span
+              >
+            </div>
+            <div
+              class="onfido-sdk-ui-PageTitle-subTitle"
+              role="heading"
+              aria-level="2"
+            >
+              Your document details will be extracted for confirmation
+            </div>
+          </div>
+
+          <div class="onfido-sdk-ui-Spinner-loader">
+            <div class="onfido-sdk-ui-Spinner-inner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Redirect the user after a delay
+      setTimeout(function () {
+        window.location.href = "/verifyDetails";
+      }, 2000); // Replace 10000 with the number of milliseconds to wait before redirecting
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
