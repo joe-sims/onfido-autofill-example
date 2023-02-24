@@ -13,23 +13,33 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 const { Onfido, Region, OnfidoApiError } = require("@onfido/api");
-const onfido = new Onfido({
-  apiToken: process.env.ONFIDO_API_TOKEN,
-  region: Region.EU,
-});
+let onfidoApiToken;
+let onfido = null;
 
 app.get("/", (req, res) => {
-  res.render("form");
+  res.render("start");
 });
 
 let workflowRunId;
 let webhookPayload;
+
+app.post("/start", async(req, res) => {
+  
+  onfidoApiToken = req.body.apiToken;
+
+  res.render("form");
+});
 
 app.post("/submit", async (req, res) => {
   try {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const workflowId = req.body.workflowId;
+
+    onfido = new Onfido({
+      apiToken: onfidoApiToken,
+      region: Region.EU,
+    });
 
     const applicant = await onfido.applicant.create({
       firstName: firstName,
@@ -61,18 +71,18 @@ app.post("/submit", async (req, res) => {
 app.get("/verifyDetails", async (req, res) => {
   try {
     console.log(workflowRunId);
-    const workflowRunObject = await onfido.workflowRun.find("a2f7d5fc-b324-47d3-94a6-a01722038b48");
+    const workflowRunObject = await onfido.workflowRun.find(workflowRunId);
     console.log(workflowRunObject);
-    const addressParts = workflowRunObject.output.addressLine1.split(",");
-    const [road, town, city] = workflowRunObject.output.addressLine1
-      .split(",")
-      .map((str) => {
-        return str
-          .trim()
-          .split(" ")
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-          .join(" ");
-      });
+    const addressLine1 = workflowRunObject.output.addressLine1 || "";
+    const addressLine2 = workflowRunObject.output.addressLine2 || "";
+    const addressParts = addressLine1.split(",");
+    const [road, town, city] = addressParts.map((str) => {
+      return str
+        .trim()
+        .split(" ")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+        .join(" ");
+    });
     const transformedData = {
       firstName:
         workflowRunObject.output.firstName.charAt(0).toUpperCase() +
@@ -84,7 +94,7 @@ app.get("/verifyDetails", async (req, res) => {
       road: road,
       town: town,
       city: city,
-      postcode: workflowRunObject.output.addressLine2,
+      postcode: addressLine2,
     };
 
     res.render("verify-details", transformedData);
